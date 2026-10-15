@@ -28,7 +28,7 @@ export default function CTASection() {
             >
               <div className="flex flex-col gap-3 items-center text-center">
                 <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-navy">
-                  ¿Listo para la <span className="text-primary">{proximoEvento.nombre}</span>?
+                  Listo para la <span className="text-primary">{proximoEvento.nombre}</span>?
                 </h2>
                 <p className="max-w-2xl mx-auto text-muted-foreground">
                   Conéctate con empresas, descubre oportunidades y da el siguiente paso en tu carrera profesional. ¡No pierdas la oportunidad de crecer!
