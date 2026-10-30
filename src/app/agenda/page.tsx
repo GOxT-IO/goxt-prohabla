@@ -64,7 +64,7 @@ export default async function AgendaPage({
               Ferias de empleo, talleres y <span className="text-primary">charlas</span>
             </h1>
             <p className="max-w-2xl text-muted-foreground md:text-lg">
-              Todas las actividades son gratuitas. Agrégalas a tu calendario para no perderte ninguna.
+              Revisa fechas y lugares, inscríbete y agrega cada actividad a tu calendario para no perderte ninguna.
             </p>
             <nav aria-label="Filtrar por tipo de evento" className="flex flex-wrap gap-2 pt-2">
               {[undefined, ...TIPOS_EVENTO].map((t) => {

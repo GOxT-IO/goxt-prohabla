@@ -94,11 +94,13 @@ export function EventoAgendaCard({ evento }: { evento: Evento }) {
               <Download aria-hidden /> Apple / Outlook
             </a>
           </Button>
-          <Button asChild variant="ghost" className="h-10 rounded-full px-4">
-            <a href={comoLlegarUrl(evento)} target="_blank" rel="noopener noreferrer">
-              <Navigation aria-hidden /> Cómo llegar
-            </a>
-          </Button>
+          {!evento.enLinea && (
+            <Button asChild variant="ghost" className="h-10 rounded-full px-4">
+              <a href={comoLlegarUrl(evento)} target="_blank" rel="noopener noreferrer">
+                <Navigation aria-hidden /> Cómo llegar
+              </a>
+            </Button>
+          )}
         </div>
       </div>
     </article>

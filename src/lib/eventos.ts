@@ -23,6 +23,8 @@ export interface Evento {
   longitude?: number;
   /** URL de Google Maps embebible (opcional). */
   mapaEmbedUrl?: string;
+  /** true si el evento es virtual (Zoom, Meet, etc.). */
+  enLinea?: boolean;
   /** Formulario de inscripción propio del evento. Si falta, se usa el registro de postulantes. */
   inscripcionUrl?: string;
 }
