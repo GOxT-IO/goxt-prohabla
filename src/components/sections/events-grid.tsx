@@ -54,7 +54,7 @@ export default async function EventsGrid() {
               Un vistazo a todos los eventos de búsqueda de <span className="text-primary">empleo</span>
             </h2>
             <p className="text-muted-foreground text-base md:text-lg">
-              Revisá las ferias que ya realizamos y enterate de las próximas oportunidades para conectar con empresas.
+              Revisa las ferias que ya realizamos y entérate de las próximas oportunidades para conectar con empresas.
             </p>
           </div>
 

@@ -316,7 +316,7 @@ export const vacantes: Vacante[] = [
 ];
 
 export function formatDate(iso: string) {
-  return new Intl.DateTimeFormat("es-CL", {
+  return new Intl.DateTimeFormat("es-CR", {
     day: "numeric",
     month: "short",
     year: "numeric",
@@ -343,6 +343,13 @@ export function isVacanteNueva(vacante: Vacante): boolean {
     (Date.now() - new Date(vacante.fechaPublicacion).getTime()) / (1000 * 60 * 60 * 24)
   );
   return dias <= 1;
+}
+
+/** Una vacante sigue vigente hasta el final del día de su fecha límite. */
+export function isVacanteVigente(vacante: Vacante, now: Date = new Date()): boolean {
+  if (!vacante.fechaLimitePostular) return true;
+  const limite = new Date(`${vacante.fechaLimitePostular.slice(0, 10)}T23:59:59-06:00`);
+  return Number.isNaN(limite.getTime()) || limite >= now;
 }
 
 export function vacanteCierraProximo(vacante: Vacante): boolean {

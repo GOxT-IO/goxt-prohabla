@@ -1,17 +1,24 @@
-import { proximoEvento } from "./eventos";
-
 export const SITE_URL = "https://www.prohabla.org";
 export const SITE_NAME = "Prohabla";
-export const SITE_DESCRIPTION = `${proximoEvento.nombre} conecta a estudiantes, egresados y empresas en un mismo lugar. ${proximoEvento.diaSemana} ${proximoEvento.fecha}, ${proximoEvento.institucion} - ${proximoEvento.sede}, ${proximoEvento.entrada}.`;
+export const SITE_TITLE = "Prohabla · Portal de empleo y ferias de empleo";
+export const SITE_DESCRIPTION =
+  "Encuentra empleo, prácticas y talento en Costa Rica. Prohabla conecta a estudiantes, egresados y jóvenes profesionales con empresas a través de su portal de vacantes y sus ferias de empleo gratuitas.";
 
-export const EVENT_INFO = {
-  name: proximoEvento.nombre,
-  // TODO: actualizar fecha/hora en formato ISO cuando cambie el próximo evento en eventos.ts
-  startDate: "2026-09-17T10:00:00-06:00",
-  endDate: "2026-09-17T16:00:00-06:00",
-  venueName: proximoEvento.institucion,
-  addressLocality: "La Fortuna, San Carlos",
-  addressCountry: "CR",
-  latitude: 10.470251989660488,
-  longitude: -84.64013292496246,
+// TODO: confirmar correo y redes oficiales de Prohabla (hoy son las de la marca ExpoTalento UTN).
+export const CONTACT_EMAIL = "expotalento.utn2026@gmail.com";
+export const SOCIAL_LINKS = {
+  facebook: "https://www.facebook.com/expotalento.utn2026",
+  tiktok: "https://www.tiktok.com/@expotalento.utn2026",
+  instagram: "https://www.instagram.com/expotalento.utn2026",
+};
+
+/** Formularios del CRM. */
+export const FORMS = {
+  postulantes:
+    "https://crm.goxt.io/widget/form/formulario-de-confirmacin-de-asistencia-a-expotalento-2026",
+  // TODO: hoy empresas usa el mismo formulario que postulantes; confirmar si debe ser
+  // el formulario de vacantes del CRM (formulario-vacantes-disponibles).
+  empresas:
+    "https://crm.goxt.io/widget/form/formulario-de-confirmacin-de-asistencia-a-expotalento-2026",
+  contacto: "https://crm.goxt.io/widget/form/formulario-de-contactos",
 };

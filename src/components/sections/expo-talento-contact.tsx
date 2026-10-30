@@ -1,3 +1,5 @@
+import { FORMS } from "@/lib/site-config";
+
 export default function ExpoTalentoContact() {
   return (
     <section
@@ -14,7 +16,7 @@ export default function ExpoTalentoContact() {
                 ¿Tienes dudas o <span className="text-primary">consultas</span>?
               </h1>
               <p className="text-muted-foreground">
-                ¿Necesitás contactar con alguien del equipo de Prohabla? Escribenos y con gusto te ayudamos.
+                ¿Necesitas contactar a alguien del equipo de Prohabla? Escríbenos y con gusto te ayudamos.
               </p>
             </div>
           </div>
@@ -22,11 +24,11 @@ export default function ExpoTalentoContact() {
           {/* Columna derecha — formulario */}
           <div className="flex flex-1 flex-col gap-8">
             <iframe
-              src="https://crm.goxt.io/widget/form/formulario-de-contactos"
+              src={FORMS.contacto}
               width="100%"
               height="1000"
               style={{ border: "none", borderRadius: "16px" }}
-              title="Formulario de Contacto - Prohabla Website"
+              title="Formulario de contacto de Prohabla"
             />
           </div>
         </div>

@@ -1,11 +1,11 @@
 import { ImageResponse } from "next/og";
 import fs from "node:fs";
 import path from "node:path";
-import { getVacantes } from "@/lib/vacantes-source";
+import { getTodasLasVacantes } from "@/lib/vacantes-source";
 import { DEFAULT_LOGO_URL } from "@/lib/vacantes";
 
 export const runtime = "nodejs";
-export const alt = "Vacante disponible - Prohabla 2026";
+export const alt = "Vacante disponible - Prohabla";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -22,7 +22,7 @@ interface OpengraphImageProps {
 
 export default async function OpengraphImage({ params }: OpengraphImageProps) {
   const { id } = await params;
-  const vacantes = await getVacantes();
+  const vacantes = await getTodasLasVacantes();
   const vacante = vacantes.find((v) => v.id === id);
 
   const logoSrc = readPublicFileAsDataUri(vacante?.logoUrl ?? DEFAULT_LOGO_URL);
@@ -80,7 +80,7 @@ export default async function OpengraphImage({ params }: OpengraphImageProps) {
             {tituloPuesto}
           </div>
           <div style={{ display: "flex", fontSize: 26, color: "#737373" }}>
-            Prohabla 2026 · Oportunidades de Empleo
+            Prohabla · Oportunidades de empleo
           </div>
         </div>
       </div>

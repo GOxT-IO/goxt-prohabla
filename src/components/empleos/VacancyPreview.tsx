@@ -18,6 +18,7 @@ import {
   formatList,
   formatRelativeDate,
   getInitials,
+  isVacanteVigente,
   joinNonEmpty,
   toSentenceCase,
   toTitleCase,
@@ -43,10 +44,10 @@ export function VacancyPreview({ vacante }: VacancyPreviewProps) {
     <div className="flex h-full flex-col">
       <div className="p-6">
         <div className="flex items-center gap-3">
-          <Avatar className="h-14 w-20 shrink-0 rounded-lg bg-white">
+          <Avatar className="h-14 w-20 shrink-0 rounded-lg border border-border bg-white">
             <AvatarImage
               src={vacante.logoUrl ?? DEFAULT_LOGO_URL}
-              alt={vacante.empresa}
+              alt=""
               className="object-contain p-2"
             />
             <AvatarFallback className="rounded-lg">
@@ -66,11 +67,17 @@ export function VacancyPreview({ vacante }: VacancyPreviewProps) {
           </div>
         </div>
 
+        {!isVacanteVigente(vacante) && (
+          <p className="mt-5 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800" role="status">
+            Esta vacante ya cerró. Revisa otras oportunidades disponibles.
+          </p>
+        )}
+
         <div className="mt-5 flex items-center gap-4">
           <Dialog>
             <DialogTrigger asChild>
-              <Button className="flex-1" size="lg">
-                Solicitar Postulación
+              <Button className="h-11 flex-1 rounded-full text-base" disabled={!isVacanteVigente(vacante)}>
+                Postular
               </Button>
             </DialogTrigger>
             <DialogContent className="flex h-[85vh] max-h-180 w-[calc(100%-2rem)] flex-col sm:max-w-3xl">
@@ -79,7 +86,7 @@ export function VacancyPreview({ vacante }: VacancyPreviewProps) {
               </DialogHeader>
               <iframe
                 src={`${POSTULACION_FORM_URL}?ref=${vacante.id}&ref_label=${encodeURIComponent(vacante.tituloPuesto)}`}
-                aria-label="Formulario de postulación"
+                title="Formulario de postulación"
                 className="min-h-0 flex-1 rounded-lg border-none"
               />
               <a

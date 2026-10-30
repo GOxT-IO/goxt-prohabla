@@ -1,7 +1,6 @@
-import { ArrowRight, Briefcase, User } from "lucide-react";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { FORMS } from "@/lib/site-config";
 
 const LOGOS_DESTACADOS = [
   "BURGER KING",
@@ -30,7 +29,7 @@ const STATS = [
   },
 ];
 
-export default function ExpoTalentoHero() {
+export default function ExpoTalentoEmpresasHero() {
   return (
     <section className="relative isolate overflow-hidden pt-10 md:pt-16 pb-16 md:pb-24"
         style={{ background: "#F7FBFE" }}
@@ -43,15 +42,15 @@ export default function ExpoTalentoHero() {
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-4">
               <Badge className="text-sm h-auto py-1 px-3 border-0 w-fit gap-2 bg-secondary text-navy">
-                <span className="size-1.5 rounded-full bg-primary" />
-                Feria de empleo 2026 · Postulaciones abiertas
+                <span className="size-1.5 rounded-full bg-primary" aria-hidden />
+                Para empresas · Sin costo
               </Badge>
-              <h1 className="text-4xl font-medium tracking-tight md:text-5xl text-navy">   
-                Encuentre el{" "}
-                <span className="text-primary">talento</span> que su organización necesita
+              <h1 className="text-4xl font-medium tracking-tight md:text-5xl text-navy">
+                Encuentra el{" "}
+                <span className="text-primary">talento</span> que tu empresa necesita
               </h1>
               <p className="text-muted-foreground text-base md:text-lg">
-                Completa el formulario de inscripción y se parte de la feria de empleo más grande del país. Publique sus vacantes y conéctese con estudiantes y profesionales listos para crecer.
+                Completa el formulario para publicar tus vacantes en el portal y participar en las ferias de empleo de Prohabla. Conecta con estudiantes y profesionales listos para crecer.
               </p>
             </div>
 
@@ -66,17 +65,11 @@ export default function ExpoTalentoHero() {
 
             <div className="flex flex-col gap-3 pt-4">
               <p className="text-sm font-medium tracking-wide text-muted-foreground uppercase">
-                Empresas que confían en Prohabla
+                Empresas que han participado en Prohabla
               </p>
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+              <ul className="flex flex-wrap items-center gap-x-6 gap-y-3">
                 {LOGOS_DESTACADOS.map((logo) => (
-                  <a
-                    key={logo.src}
-                    href="https://goxt.io/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex shrink-0 items-center justify-center"
-                  >
+                  <li key={logo.src} className="flex shrink-0 items-center justify-center">
                     <Image
                       src={logo.src}
                       alt={logo.name}
@@ -85,20 +78,20 @@ export default function ExpoTalentoHero() {
                       style={{ width: "auto" }}
                       className="h-9 w-auto object-contain"
                     />
-                  </a>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           </div>
 
           {/* Columna derecha: Formulario Iframe */}
           <div className="flex flex-col gap-8">
             <iframe
-              src="https://crm.goxt.io/widget/form/formulario-de-confirmacin-de-asistencia-a-expotalento-2026"
+              src={FORMS.empresas}
               width="100%"
               height="850"
               style={{ border: "none", borderRadius: "16px" }}
-              title="Formulario de Confirmación asistencia a ExpoTalento 2026."
+              title="Formulario de registro de empresas"
             />
           </div>
         </div>

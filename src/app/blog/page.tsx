@@ -7,8 +7,9 @@ export const metadata: Metadata = {
   title: "Blog",
   description:
     "Artículos, guías y recursos para tu búsqueda de empleo o el reclutamiento de talento.",
+  alternates: { canonical: "/blog" },
   openGraph: {
-    title: "Blog | Prohabla 2026",
+    title: "Blog | Prohabla",
     description:
       "Artículos, guías y recursos para tu búsqueda de empleo o el reclutamiento de talento.",
   },

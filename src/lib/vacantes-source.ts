@@ -1,6 +1,6 @@
 import { getLogos, type Logo } from "@/lib/logos";
 import { resolveCompanyLogo } from "@/lib/company-logo";
-import type { Vacante } from "@/lib/vacantes";
+import { isVacanteVigente, vacantes as vacantesDeEjemplo, type Vacante } from "@/lib/vacantes";
 
 const VACANTES_ENDPOINT =
   "https://api-crm.goxt.io/api/widget/form/formulario-vacantes-disponibles/answers";
@@ -85,7 +85,24 @@ function mapAnswerToVacante(raw: RawAnswerRecord, logos: Logo[]): Vacante {
   };
 }
 
+function ordenarPorFecha(vacantes: Vacante[]): Vacante[] {
+  return [...vacantes].sort(
+    (a, b) => new Date(b.fechaPublicacion).getTime() - new Date(a.fechaPublicacion).getTime()
+  );
+}
+
+/** Vacantes vigentes, de la más nueva a la más antigua. */
 export async function getVacantes(): Promise<Vacante[]> {
+  // Solo para desarrollo local sin acceso al CRM: VACANTES_MOCK=1 usa los datos de ejemplo.
+  if (process.env.VACANTES_MOCK === "1") {
+    return ordenarPorFecha(vacantesDeEjemplo.map((v) => ({ ...v, contacto: undefined })));
+  }
+  return ordenarPorFecha((await getTodasLasVacantes()).filter((v) => isVacanteVigente(v)));
+}
+
+/** Todas las vacantes del CRM, incluidas las vencidas (para no romper enlaces compartidos). */
+export async function getTodasLasVacantes(): Promise<Vacante[]> {
+  if (process.env.VACANTES_MOCK === "1") return getVacantes();
   try {
     const res = await fetch(VACANTES_ENDPOINT, { next: { revalidate: 60 } });
     if (!res.ok) {

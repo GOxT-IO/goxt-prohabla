@@ -1,110 +1,119 @@
-"use client";
-
+import Link from "next/link";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { Tagline } from "@/components/pro-blocks/landing-page/tagline";
 import { Badge } from "../ui/badge";
-import { proximoEvento } from "@/lib/eventos";
+import { getProximoEvento } from "@/lib/eventos";
+
+interface Pregunta {
+  pregunta: string;
+  /** Texto plano para los datos estructurados de Google. */
+  respuesta: string;
+  /** Versión con enlaces para la página (opcional). */
+  contenido?: React.ReactNode;
+}
+
+function getPreguntas(): Pregunta[] {
+  const evento = getProximoEvento();
+
+  return [
+    {
+      pregunta: "¿Qué es Prohabla?",
+      respuesta:
+        "Prohabla es un portal de empleo y un programa de ferias de empleo en distintos puntos de Costa Rica. Las empresas publican sus vacantes y estudiantes, egresados y jóvenes profesionales postulan gratis.",
+    },
+    {
+      pregunta: "¿Cuánto cuesta postular o asistir a una feria?",
+      respuesta:
+        "Nada. Postular a vacantes y asistir a las ferias es 100% gratuito, sin boletos ni cupos limitados.",
+    },
+    {
+      pregunta: "¿Cómo postulo a una vacante?",
+      respuesta:
+        "Entra a la sección Empleos, elige la vacante y presiona Postular. Completa el formulario con tus datos y tu CV, y la empresa recibirá tu postulación.",
+      contenido: (
+        <>
+          Entra a <Link href="/empleos" className="font-medium text-primary underline-offset-4 hover:underline">Empleos</Link>, elige la vacante y presiona <strong>Postular</strong>. Completa el formulario con tus datos y tu CV, y la empresa recibirá tu postulación.
+        </>
+      ),
+    },
+    {
+      pregunta: "¿Necesito experiencia laboral?",
+      respuesta:
+        "No. Hay oportunidades para personas con experiencia y para quienes buscan su primer empleo, incluidas prácticas para estudiantes avanzados y recién egresados. Puedes filtrar las vacantes por experiencia mínima.",
+    },
+    {
+      pregunta: "Tengo una empresa, ¿cómo publico mis vacantes?",
+      respuesta:
+        "Completa el formulario de la sección Empresas con la información de tus vacantes. Publicarlas no tiene costo.",
+      contenido: (
+        <>
+          Completa el formulario de la sección <Link href="/empresas" className="font-medium text-primary underline-offset-4 hover:underline">Empresas</Link> con la información de tus vacantes. Publicarlas no tiene costo.
+        </>
+      ),
+    },
+    {
+      pregunta: "¿Cuándo es la próxima feria de empleo?",
+      respuesta: evento
+        ? `La próxima es la ${evento.nombre}: ${evento.diaSemana.toLowerCase()} ${evento.fecha}, de ${evento.horario}, en ${evento.institucion} (${evento.sede}).`
+        : "Estamos preparando la próxima feria. Revisa la sección Eventos o registra tu CV para enterarte primero.",
+    },
+    {
+      pregunta: "¿Qué llevo a una feria de empleo?",
+      respuesta:
+        "Lleva tu CV impreso y en digital, investiga antes a las empresas participantes y usa ropa formal y cómoda para el clima de la zona.",
+    },
+    {
+      pregunta: "¿Qué tipo de empresas participan?",
+      respuesta:
+        "Principalmente empresas de comercio, logística, servicios y turismo, con nuevas organizaciones en cada feria.",
+    },
+  ];
+}
 
 export default function ExpoTalentoFAQ() {
+  const preguntas = getPreguntas();
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: preguntas.map((p) => ({
+      "@type": "Question",
+      name: p.pregunta,
+      acceptedAnswer: { "@type": "Answer", text: p.respuesta },
+    })),
+  };
+
   return (
     <section
       style={{ background: "#FFFFFF" }}
       className="relative isolate overflow-hidden bg-background section-padding-y"
       aria-labelledby="faq-heading"
     >
-      <div className="container-padding-x mx-auto flex max-w-5xl flex-col gap-10 md:gap-12">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      <div className="container-padding-x mx-auto flex max-w-4xl flex-col gap-10 md:gap-12">
         <div className="section-title-gap-lg flex flex-col items-center text-center">
           <Badge className="text-sm h-auto py-1 px-3 border-0 w-fit gap-2 bg-secondary text-navy">
-            <span className="size-1.5 rounded-full bg-primary" />
-            Preguntas Frecuentes · Prohabla
+            <span className="size-1.5 rounded-full bg-primary" aria-hidden />
+            Preguntas frecuentes
           </Badge>
-          <h1 id="faq-heading" className="text-3xl md:text-5xl font-medium tracking-tight text-navy">
-            ¿Tiene dudas o <span className="text-primary">consultas</span>?
-          </h1>
+          <h2 id="faq-heading" className="text-3xl md:text-5xl font-medium tracking-tight text-navy">
+            ¿Tienes <span className="text-primary">dudas</span>?
+          </h2>
           <p className="text-muted-foreground text-lg/8 text-pretty">
-            Reunimos la información más importante para que aproveche al máximo su visita a la feria. 
+            Si no encuentras tu respuesta, <Link href="/contacto" className="font-medium text-primary underline-offset-4 hover:underline">escríbenos</Link>.
           </p>
         </div>
 
-        <Accordion type="single" defaultValue="item-1" aria-label="FAQ items">
-          <AccordionItem value="item-1">
-            <AccordionTrigger className="text-left text-base font-medium">
-              ¿Qué es una feria de empleo de Prohabla?
-            </AccordionTrigger>
-            <AccordionContent className="text-muted-foreground text-sm">
-              Prohabla impulsa ferias de empleo en distintos puntos de Costa Rica, incentivando a que las empresas publiquen sus oportunidades laborales para que estudiantes, egresados y profesionales interesados puedan postular y conectar con más de 90 empresas de sectores como comercio, logística y servicios.
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem value="item-2">
-            <AccordionTrigger className="text-left text-base font-medium">
-              ¿Cuándo y dónde es la próxima feria de empleo?
-            </AccordionTrigger>
-            <AccordionContent className="text-muted-foreground text-sm">
-              {`Se realiza el ${proximoEvento.diaSemana} ${proximoEvento.fecha}, de ${proximoEvento.horario}, en ${proximoEvento.institucion} (${proximoEvento.sede}).`}
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem value="item-3">
-            <AccordionTrigger className="text-left text-base font-medium">
-              ¿La entrada a la feria tiene algún costo?
-            </AccordionTrigger>
-            <AccordionContent className="text-muted-foreground text-sm">
-              No, la feria es 100% gratuita y de entrada libre, sin necesidad de comprar boletos ni cupos limitados.
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem value="item-4">
-            <AccordionTrigger className="text-left text-base font-medium">
-              Busco trabajo, ¿cómo puedo participar en la feria?
-            </AccordionTrigger>
-            <AccordionContent className="text-muted-foreground text-sm">
-              Complete el formulario de inscripción para postulantes en este sitio, adjunte su currículum y quedará disponible para que las empresas participantes revisen su perfil.
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem value="item-5">
-            <AccordionTrigger className="text-left text-base font-medium">
-              ¿Necesito tener experiencia laboral para asistir?
-            </AccordionTrigger>
-            <AccordionContent className="text-muted-foreground text-sm">
-              No. La feria está dirigida tanto a personas con experiencia como a quienes están dando sus primeros pasos en el mundo laboral, incluyendo estudiantes avanzados y recién egresados.
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem value="item-6">
-            <AccordionTrigger className="text-left text-base font-medium">
-              Tengo una empresa, ¿cómo registro mis vacantes en la feria?
-            </AccordionTrigger>
-            <AccordionContent className="text-muted-foreground text-sm">
-              Las empresas pueden completar el formulario de registro en este sitio, adjuntando la información de las vacantes disponibles para publicarlas y darlas a conocer a los asistentes.
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem value="item-7">
-            <AccordionTrigger className="text-left text-base font-medium">
-              ¿Qué debo llevar si voy a asistir a la feria de empleo?
-            </AccordionTrigger>
-            <AccordionContent className="text-muted-foreground text-sm">
-              Se recomienda llevar el currículum impreso y en formato digital, investigar previamente las empresas participantes, y usar ropa formal y fresca considerando el clima de la región.
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem value="item-8">
-            <AccordionTrigger className="text-left text-base font-medium">
-              ¿Qué sectores de empresas participan en las ferias de Prohabla?
-            </AccordionTrigger>
-            <AccordionContent className="text-muted-foreground text-sm">
-              Empresas de los sectores de comercio, logística y servicios, con nuevas organizaciones confirmadas en cada edición.
-            </AccordionContent>
-          </AccordionItem>
+        <Accordion type="single" collapsible defaultValue="item-0">
+          {preguntas.map((p, i) => (
+            <AccordionItem key={p.pregunta} value={`item-${i}`}>
+              <AccordionTrigger className="text-left text-base font-medium">{p.pregunta}</AccordionTrigger>
+              <AccordionContent className="text-muted-foreground text-sm">{p.contenido ?? p.respuesta}</AccordionContent>
+            </AccordionItem>
+          ))}
         </Accordion>
       </div>
     </section>

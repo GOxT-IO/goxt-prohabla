@@ -6,8 +6,9 @@ export const metadata: Metadata = {
   title: "Eventos",
   description:
     "Un vistazo a todos los eventos de búsqueda de empleo de Prohabla: ferias pasadas y próximas.",
+  alternates: { canonical: "/eventos" },
   openGraph: {
-    title: "Eventos | Prohabla 2026",
+    title: "Eventos | Prohabla",
     description:
       "Un vistazo a todos los eventos de búsqueda de empleo de Prohabla: ferias pasadas y próximas.",
   },
