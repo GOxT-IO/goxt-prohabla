@@ -206,7 +206,7 @@ export function EventBanner({ evento }: { evento: Evento | null }) {
             description={
               evento
                 ? "Lleva tu CV impreso, conversa con reclutadores y conoce a las empresas participantes. La entrada es libre."
-                : "Organizamos ferias de empleo presenciales en distintos puntos de Costa Rica. Revisa las ferias realizadas y entérate de las próximas."
+                : "Organizamos ferias de empleo presenciales en distintos puntos de Costa Rica. Revisa la agenda y entérate de las próximas ferias, talleres y charlas."
             }
           />
           {evento && (
@@ -237,12 +237,12 @@ export function EventBanner({ evento }: { evento: Evento | null }) {
           <div className="flex flex-wrap gap-3">
             {evento && (
               <Button asChild className="h-12 rounded-full px-6 text-base">
-                <Link href="/postulantes">Confirmar asistencia</Link>
+                <Link href={`/agenda#${evento.id}`}>Inscribirme</Link>
               </Button>
             )}
             <Button asChild variant="outline" className="h-12 rounded-full px-6 text-base">
-              <Link href="/eventos">
-                Ver todas las ferias <ArrowRight aria-hidden />
+              <Link href="/agenda">
+                Ver la agenda <ArrowRight aria-hidden />
               </Link>
             </Button>
           </div>

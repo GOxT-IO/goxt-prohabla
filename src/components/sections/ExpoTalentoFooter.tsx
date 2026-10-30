@@ -42,7 +42,8 @@ const footerSections = [
     links: [
       { title: "Buscar empleos", href: "/empleos" },
       { title: "Registrar mi CV", href: "/postulantes" },
-      { title: "Ferias de empleo", href: "/eventos" },
+      { title: "Agenda de ferias", href: "/agenda" },
+      { title: "Eventos realizados", href: "/eventos" },
     ],
   },
   {

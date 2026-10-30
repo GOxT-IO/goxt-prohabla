@@ -18,6 +18,7 @@ import { Menu, X } from "lucide-react";
 const navItems = [
   { title: "Empleos", href: "/empleos" },
   { title: "Empresas", href: "/empresas" },
+  { title: "Agenda", href: "/agenda" },
   { title: "Eventos", href: "/eventos" },
   { title: "Blog", href: "/blog" },
   { title: "Contacto", href: "/contacto" },
