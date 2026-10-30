@@ -22,7 +22,7 @@ const testimonials: Testimonial[] = [
         quote: "La actividad facilitó el acercamiento con estudiantes y profesionales de distintas áreas, fortaleciendo la relación entre la empresa y el sector académico. Una iniciativa de gran valor tanto para las empresas como para quienes buscan empleo.",
         author: "Helena Góngora",
         role: "Asistente de Recursos Humanos · Carnes Castillo",
-        image: "/HelenaCarnesCastillo.png",
+        image: "/HelenaCarnesCastillo.jpg",
         logoSrc: "/empresas-trimmed/CARNES CASTILLO.png",
         logoAlt: "Carnes Castillo",
     },
