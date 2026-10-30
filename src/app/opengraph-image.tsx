@@ -4,7 +4,7 @@ import path from "node:path";
 import { proximoEvento } from "@/lib/eventos";
 
 export const runtime = "nodejs";
-export const alt = "Prohabla 2026 - Feria de empleo";
+export const alt = "Prohabla - Portal de empleo y ferias de empleo";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

@@ -1,9 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { SearchIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -20,56 +18,43 @@ import {
 
 interface VacancyListProps {
   vacantes: Vacante[];
+  total: number;
   selectedId: string | null;
   onSelect: (id: string) => void;
+  onClear: () => void;
 }
 
-export function VacancyList({ vacantes, selectedId, onSelect }: VacancyListProps) {
-  const [search, setSearch] = useState("");
-
-  const filtered = vacantes.filter((v) => {
-    if (!search) return true;
-    const q = search.toLowerCase();
-    return (
-      v.tituloPuesto.toLowerCase().includes(q) ||
-      v.empresa.toLowerCase().includes(q) ||
-      v.ubicacion.toLowerCase().includes(q)
-    );
-  });
-
+export function VacancyList({ vacantes, total, selectedId, onSelect, onClear }: VacancyListProps) {
   return (
-    <div className="flex h-full min-w-0 flex-col">
-      <div className="px-5 pt-5 pb-3">
-        <h2 className="text-lg font-semibold text-navy">
-          Vacantes Disponibles ({vacantes.length})
+    <div className="flex h-full min-w-0 flex-1 flex-col">
+      <div className="border-b border-border px-5 py-4">
+        <h2 className="text-base font-semibold text-navy" aria-live="polite">
+          {vacantes.length === total
+            ? `${total} ${total === 1 ? "vacante disponible" : "vacantes disponibles"}`
+            : `${vacantes.length} de ${total} vacantes`}
         </h2>
       </div>
 
-      <div className="px-5 pb-4">
-        <div className="relative">
-          <SearchIcon className="pointer-events-none absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            placeholder="Buscar por cargo, empresa o ciudad..."
-            className="pl-8"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
-      </div>
-
       <div className="flex-1 overflow-y-auto">
-        {filtered.length === 0 ? (
-          <p className="py-8 text-center text-sm text-muted-foreground">
-            Sin resultados.
-          </p>
+        {vacantes.length === 0 ? (
+          <div className="flex flex-col items-center gap-3 px-6 py-12 text-center">
+            <p className="font-medium text-navy">No encontramos vacantes con esos filtros</p>
+            <p className="text-sm text-muted-foreground">Prueba con otra palabra o quita algunos filtros.</p>
+            {total > 0 && (
+              <Button variant="outline" className="rounded-full" onClick={onClear}>
+                Ver todas las vacantes
+              </Button>
+            )}
+          </div>
         ) : (
-          filtered.map((vacante) => {
+          vacantes.map((vacante) => {
             const selected = selectedId === vacante.id;
             return (
               <button
                 key={vacante.id}
                 type="button"
                 onClick={() => onSelect(vacante.id)}
+                aria-current={selected ? "true" : undefined}
                 className={cn(
                   "flex w-full items-center gap-3 border-b border-l-4 border-border px-5 py-4 text-left transition-colors last:border-b-0",
                   selected
@@ -80,7 +65,7 @@ export function VacancyList({ vacantes, selectedId, onSelect }: VacancyListProps
                 <Avatar className="h-10 w-14 shrink-0 rounded-lg bg-white">
                   <AvatarImage
                     src={vacante.logoUrl ?? DEFAULT_LOGO_URL}
-                    alt={vacante.empresa}
+                    alt=""
                     className="object-contain p-1"
                   />
                   <AvatarFallback className="rounded-lg text-xs">
@@ -109,7 +94,7 @@ export function VacancyList({ vacantes, selectedId, onSelect }: VacancyListProps
                           variant="outline"
                           className="border-emerald-200 bg-emerald-50 text-emerald-700"
                         >
-                          Nuevo
+                          Nueva
                         </Badge>
                       )}
                       {vacanteCierraProximo(vacante) && (

@@ -1,72 +1,90 @@
-import ExpoTalentoHero from "@/components/sections/ExpoTalento-hero";
 import Testimonials from "@/components/sections/ExpoTalentoTestimonios";
-import CTASection from "@/components/sections/ExpoTalentoCTA";
 import ExpoTalentoFAQ from "@/components/sections/ExpoTalentoFAQ";
 import Footer from "@/components/sections/ExpoTalentoFooter";
-import ExpoTalentoPilares from "@/components/sections/ExpoTalentoPilares";
 import ExpoTalentoStats from "@/components/sections/ExpoTalentoStats";
-import ExpoTalentoSectores from "@/components/sections/ExpoTalentoSectores";
-import ExpoTalentoUbicacion from "@/components/sections/ExpoTalentoUbicacion";
-import { EVENT_INFO, SITE_DESCRIPTION, SITE_URL } from "@/lib/site-config";
+import { HomeHero } from "@/components/portal/home-hero";
+import {
+  AudienceCTA,
+  CategoryGrid,
+  CompaniesStrip,
+  EventBanner,
+  LatestJobs,
+} from "@/components/portal/home-sections";
+import { contarCategorias } from "@/components/portal/categorias";
+import { getProximoEvento, type Evento } from "@/lib/eventos";
+import { getLogos } from "@/lib/logos";
+import { getVacantes } from "@/lib/vacantes-source";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site-config";
 
-const eventJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Event",
-  name: EVENT_INFO.name,
-  startDate: EVENT_INFO.startDate,
-  endDate: EVENT_INFO.endDate,
-  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-  eventStatus: "https://schema.org/EventScheduled",
-  description: SITE_DESCRIPTION,
-  image: [`${SITE_URL}/opengraph-image`],
-  location: {
-    "@type": "Place",
-    name: EVENT_INFO.venueName,
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: EVENT_INFO.addressLocality,
-      addressCountry: EVENT_INFO.addressCountry,
+export const revalidate = 60;
+
+function eventJsonLd(evento: Evento) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: evento.nombre,
+    startDate: evento.inicio,
+    endDate: evento.fin,
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    eventStatus: "https://schema.org/EventScheduled",
+    description: `${evento.nombre}: feria de empleo gratuita en ${evento.institucion}, ${evento.sede}.`,
+    image: [`${SITE_URL}/opengraph-image`],
+    location: {
+      "@type": "Place",
+      name: evento.institucion,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: evento.addressLocality,
+        addressCountry: "CR",
+      },
+      ...(evento.latitude != null && evento.longitude != null
+        ? { geo: { "@type": "GeoCoordinates", latitude: evento.latitude, longitude: evento.longitude } }
+        : {}),
     },
-    ...(EVENT_INFO.latitude != null && EVENT_INFO.longitude != null
-      ? {
-          geo: {
-            "@type": "GeoCoordinates",
-            latitude: EVENT_INFO.latitude,
-            longitude: EVENT_INFO.longitude,
-          },
-        }
-      : {}),
-  },
-  organizer: {
-    "@type": "Organization",
-    name: "Prohabla",
-    url: SITE_URL,
-  },
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "CRC",
-    availability: "https://schema.org/InStock",
-    url: SITE_URL,
+    organizer: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "CRC",
+      availability: "https://schema.org/InStock",
+      url: SITE_URL,
+    },
+  };
+}
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: SITE_URL,
+  description: SITE_DESCRIPTION,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: `${SITE_URL}/empleos?q={search_term_string}`,
+    "query-input": "required name=search_term_string",
   },
 };
 
-export default function Home() {
+export default async function Home() {
+  const vacantes = await getVacantes();
+  const evento = getProximoEvento();
+  const categorias = contarCategorias(vacantes);
+  const populares = categorias.filter((c) => c.total > 0).slice(0, 4).map((c) => c.categoria);
+  const jsonLd = evento ? [websiteJsonLd, eventJsonLd(evento)] : [websiteJsonLd];
+
   return (
     <div className="relative">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <main>
-        <ExpoTalentoHero />
+        <HomeHero totalVacantes={vacantes.length} categoriasPopulares={populares} />
+        <LatestJobs vacantes={vacantes.slice(0, 6)} />
+        <CategoryGrid categorias={categorias.slice(0, 8)} />
+        <CompaniesStrip logos={getLogos("empresas-trimmed").filter((l) => !l.name.startsWith("goxt"))} />
+        <AudienceCTA />
+        <EventBanner evento={evento} />
         <ExpoTalentoStats />
-        <ExpoTalentoPilares />
-        <ExpoTalentoSectores />
-        <ExpoTalentoUbicacion />
         <Testimonials />
         <ExpoTalentoFAQ />
-        <CTASection />
       </main>
       <Footer />
     </div>

@@ -1,6 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { getLogos } from "@/lib/logos";
+import { GOXT_LOGO_URL } from "@/lib/vacantes";
+import { CONTACT_EMAIL, SOCIAL_LINKS } from "@/lib/site-config";
 
 const COLABORADORES = getLogos("colaboran-trimmed").filter(
   (logo) => logo.name !== "Prohabla"
@@ -12,11 +15,6 @@ const FacebookIcon = () => (
   </svg>
 );
 
-const WhatsAppIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" fill="currentColor" />
-  </svg>
-);
 
 const TikTokIcon = () => (
   <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,18 +22,6 @@ const TikTokIcon = () => (
   </svg>
 );
 
-const LinkedinIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g clipPath="url(#goxt-linkedin-clip)">
-      <path d="M13.633 13.633h-2.37V9.92c0-.885-.017-2.025-1.234-2.025-1.235 0-1.424.965-1.424 1.96v3.778h-2.37V5.998H8.51v1.043h.031a2.5 2.5 0 0 1 2.246-1.233c2.403 0 2.846 1.58 2.846 3.637zM3.56 4.954a1.376 1.376 0 1 1 0-2.751 1.376 1.376 0 0 1 0 2.751m1.185 8.679H2.372V5.998h2.373zM14.815.001H1.18A1.17 1.17 0 0 0 0 1.154v13.691A1.17 1.17 0 0 0 1.18 16h13.635A1.17 1.17 0 0 0 16 14.845V1.153A1.17 1.17 0 0 0 14.815 0" fill="currentColor" />
-    </g>
-    <defs>
-      <clipPath id="goxt-linkedin-clip">
-        <path d="M0 0h16v16H0z" />
-      </clipPath>
-    </defs>
-  </svg>
-);
 
 const InstagramIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -52,175 +38,125 @@ const InstagramIcon = () => (
 
 const footerSections = [
   {
-    title: "Navegación",
+    title: "Postulantes",
     links: [
-      { title: "Inicio", href: "/" },
-      { title: "Contacto", href: "/confirmar" },
-      { title: "Blog", href: "/blog" },
+      { title: "Buscar empleos", href: "/empleos" },
+      { title: "Registrar mi CV", href: "/postulantes" },
+      { title: "Ferias de empleo", href: "/eventos" },
     ],
   },
   {
-    title: "Soporte",
+    title: "Empresas",
     links: [
+      { title: "Publicar vacante", href: "/empresas" },
+      { title: "Participar en una feria", href: "/empresas" },
+    ],
+  },
+  {
+    title: "Prohabla",
+    links: [
+      { title: "Blog", href: "/blog" },
+      { title: "Contacto", href: "/contacto" },
       { title: "Privacidad", href: "/privacidad" },
-      { title: "Términos & Condiciones", href: "/terminos" },
     ],
   },
 ];
 
+const socialLinks = [
+  { label: "Facebook", href: SOCIAL_LINKS.facebook, Icon: FacebookIcon },
+  { label: "TikTok", href: SOCIAL_LINKS.tiktok, Icon: TikTokIcon },
+  { label: "Instagram", href: SOCIAL_LINKS.instagram, Icon: InstagramIcon },
+];
+
 const Footer = () => {
   return (
-    <footer
-    className="relative overflow-hidden py-8"
-    style={{ background: "#FFFFFF" }}>
-      <div className="page-bg-grid" />
-      <div className="max-w-7xl xl:px-16 lg:px-8 px-4 mx-auto">
-        <div className="flex flex-col gap-6 sm:gap-8">
-          <div 
-          className="py-8 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 lg:grid-cols-12 gap-x-8 gap-y-8 px-6 xl:px-0"
-          >
-
-            {/* Logo + tagline + redes */}
-            <div className="col-span-full lg:col-span-4">
-              <div className="flex flex-col gap-6 ">
-                <a href="/" className="flex items-center">
-                  <Image
-                    src="/colaboran-trimmed/Prohabla.png"
-                    alt="Prohabla"
-                    width={140}
-                    height={46}
-                    style={{ width: "auto" }}
-                    className="h-9 w-auto object-contain"
-                  />
-                </a>
-                <p className="text-base font-normal text-muted-foreground text-justify">
-                  Conectamos talento con oportunidades reales. Un espacio donde estudiantes, profesionales y empresas se encuentran para construir el futuro laboral de Costa Rica.
-                </p>
-                <div className="flex items-center gap-4">
-                  <a href="https://www.facebook.com/expotalento.utn2026" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
-                    <FacebookIcon />
-                  </a>
-                  {/*<a href="https://www.linkedin.com/company/goxt/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
-                    <LinkedinIcon />
-                  </a>*/}
-                  <a href="https://www.tiktok.com/@expotalento.utn2026" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
-                    <TikTokIcon />
-                  </a>
-                  <a href="https://www.instagram.com/expotalento.utn2026" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
-                    <InstagramIcon />
-                  </a>
-                  {/* <a href="https://wa.me/56929184887" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
-                    <WhatsAppIcon />
-                  </a> */}
-                </div>
-              </div>
-            </div>
-
-            <div className="col-span-1 lg:block hidden" />
-
-            {/* Navegación + Legal */}
-            {footerSections.map(({ title, links }, index) => (
-              <div key={index} className="col-span-2">
-                <div className="flex flex-col gap-4 ">
-                  <p className="text-base font-medium text-foreground">{title}</p>
-                  <ul className="flex flex-col gap-3">
-                    {links.map(({ title, href }) => (
-                      <li key={title}>
-                        <a href={href} className="text-base font-normal text-muted-foreground hover:text-foreground">
-                          {title}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
-            
-
-            {/* Contacto */}
-            <div className="col-span-3">
-              <div className="flex flex-col gap-4 ">
-                <p className="text-base font-medium text-foreground">Contacto</p>
-                <ul className="flex flex-col gap-3">
-                  <li>
-                    <p className="text-base font-normal text-muted-foreground">
-                      Costa Rica
-                    </p>
-                  </li>
-                  <li>
-                    <a href="mailto:*expotalento.utn2026@gmail.com" className="text-base font-normal text-muted-foreground hover:text-foreground">
-                      *expotalento.utn2026@gmail.com
-                    </a>
-                  </li>
-                  {/*
-                  <li>
-                    <a href="https://wa.me/56929184887" target="_blank" rel="noopener noreferrer" className="text-base font-normal text-muted-foreground hover:text-foreground">
-                      +56 9 2918 4887
-                    </a>
-                  </li>
-                  */}
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* Aliados y colaboradores */}
-          <div className="flex flex-col gap-6 border-t border-border pt-8">
-            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-              <p className="text-xs font-medium tracking-wide text-muted-foreground">
-                Aliados y colaboradores
-              </p>
-              <div className="flex flex-col items-start sm:items-end gap-2">
+    <footer className="border-t border-border bg-white py-12">
+      <div className="mx-auto flex max-w-7xl flex-col gap-10 px-4 sm:px-16">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-12">
+          <div className="col-span-full flex flex-col gap-5 md:col-span-4">
+            <Link href="/" className="flex items-center" aria-label="Prohabla, ir al inicio">
+              <Image
+                src="/colaboran-trimmed/Prohabla.png"
+                alt="Prohabla"
+                width={140}
+                height={46}
+                style={{ width: "auto" }}
+                className="h-9 w-auto object-contain"
+              />
+            </Link>
+            <p className="text-sm text-muted-foreground">
+              Conectamos talento con oportunidades reales. Un espacio donde estudiantes, profesionales y empresas se encuentran para construir el futuro laboral de Costa Rica.
+            </p>
+            <a href={`mailto:${CONTACT_EMAIL}`} className="w-fit text-sm text-muted-foreground hover:text-foreground">
+              {CONTACT_EMAIL}
+            </a>
+            <div className="flex items-center gap-4">
+              {socialLinks.map(({ label, href, Icon }) => (
                 <a
-                  href="https://goxt.io/"
+                  key={label}
+                  href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2"
+                  aria-label={`Prohabla en ${label}`}
+                  className="text-muted-foreground hover:text-foreground"
                 >
-                  <p className="text-xs text-muted-foreground">Impulsado con tecnología de</p>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/empresas-trimmed/goxt-negro_13032026183533.png"
-                    alt="GOxT"
-                    className="h-5 w-auto object-contain"
-                  />
+                  <Icon />
                 </a>
-                <a
-                  href="https://nodo.goxt.io/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2"
-                >
-                  <p className="text-xs text-muted-foreground">Impulsado por</p>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/Nodo.svg"
-                    alt="Nodo"
-                    className="h-7 w-auto object-contain"
-                  />
-                </a>
-              </div>
-            </div>
-            <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
-              {COLABORADORES.map((logo) => (
-                <div key={logo.src} className="flex items-center justify-center">
-                  <Image
-                    src={logo.src}
-                    alt={logo.name}
-                    width={140}
-                    height={36}
-                    style={{ width: "auto" }}
-                    className="h-9 w-auto object-contain"
-                  />
-                </div>
               ))}
             </div>
           </div>
-          <Separator orientation="horizontal" />
-          <p className="text-sm font-normal text-muted-foreground text-center ">
-            © 2026 Prohabla. Todos los derechos reservados.
-          </p>
+
+          {footerSections.map(({ title, links }) => (
+            <nav key={title} aria-label={title} className="col-span-1 md:col-span-2 md:col-start-auto">
+              <p className="mb-4 text-sm font-semibold text-navy">{title}</p>
+              <ul className="flex flex-col gap-3">
+                {links.map((link) => (
+                  <li key={link.title}>
+                    <Link href={link.href} className="text-sm text-muted-foreground hover:text-foreground">
+                      {link.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
         </div>
+
+        <div className="flex flex-col gap-6 border-t border-border pt-8">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <p className="text-xs font-medium tracking-wide text-muted-foreground">Aliados y colaboradores</p>
+            <div className="flex flex-col items-start gap-2 sm:items-end">
+              <a href="https://goxt.io/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                <span className="text-xs text-muted-foreground">Impulsado con tecnología de</span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={GOXT_LOGO_URL} alt="GOxT" className="h-5 w-auto object-contain" />
+              </a>
+              <a href="https://nodo.goxt.io/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                <span className="text-xs text-muted-foreground">Impulsado por</span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/Nodo.svg" alt="Nodo" className="h-7 w-auto object-contain" />
+              </a>
+            </div>
+          </div>
+          <ul className="flex flex-wrap items-center gap-x-8 gap-y-4">
+            {COLABORADORES.map((logo) => (
+              <li key={logo.src} className="flex items-center justify-center">
+                <Image
+                  src={logo.src}
+                  alt={logo.name}
+                  width={140}
+                  height={36}
+                  style={{ width: "auto" }}
+                  className="h-9 w-auto object-contain"
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+        <Separator orientation="horizontal" />
+        <p className="text-center text-sm text-muted-foreground">
+          © {new Date().getFullYear()} Prohabla. Todos los derechos reservados.
+        </p>
       </div>
     </footer>
   );

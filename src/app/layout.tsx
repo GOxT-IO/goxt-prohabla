@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/navbar";
 import Script from "next/script";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site-config";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site-config";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -13,15 +13,12 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Prohabla 2026",
-    template: "%s | Prohabla 2026",
+    default: SITE_TITLE,
+    template: "%s | Prohabla",
   },
   description: SITE_DESCRIPTION,
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
-    title: "Prohabla 2026",
+    title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     url: "/",
     siteName: SITE_NAME,
@@ -30,7 +27,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Prohabla 2026",
+    title: SITE_TITLE,
     description: SITE_DESCRIPTION,
   },
   robots: {
@@ -53,7 +50,7 @@ export default function RootLayout({
       )}
       <body className="min-h-full flex flex-col" style={{ background: "#F7FBFE" }}>
         <Navbar />
-        {children}
+        <div id="contenido" className="flex flex-1 flex-col">{children}</div>
         <Script
           src="https://api-crm.goxt.io/api/widget/embed.js"
           data-api-key="wk_f8c21837b9b4027d0e1f4e32d87eb2f670dc4ddd2550e7f1"

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import { motion, useInView } from "motion/react";
+import { Quote } from "lucide-react";
 
 interface Testimonial {
     quote: string;
@@ -55,10 +56,10 @@ export default function Testimonials() {
                 >
                     <Badge className="text-sm h-auto py-1 px-3 border-0 w-fit gap-2 bg-secondary text-navy">
                         <span className="size-1.5 rounded-full bg-primary" />
-                        Ferias de Empleo Prohabla
+                        Testimonios
                     </Badge>
                     <h2 className="text-3xl md:text-5xl leading-none font-medium tracking-tight text-navy">
-                        Casos reales de <span className="text-primary">Éxito</span>
+                        Lo que dicen las <span className="text-primary">empresas</span>
                     </h2>
                 </motion.div>
 
@@ -77,21 +78,12 @@ export default function Testimonials() {
                                         {/* Columna izquierda: comilla + quote + autor */}
                                         <div className="lg:col-span-8 col-span-12 flex sm:flex-row flex-col sm:gap-10 gap-6 lg:pe-12">
                                             <div className="shrink-0 flex items-start">
-                                                <img
-                                                    src="https://images.shadcnspace.com/assets/svgs/icon-quote.svg"
-                                                    alt="quote"
-                                                    className="dark:hidden"
-                                                />
-                                                <img
-                                                    src="https://images.shadcnspace.com/assets/svgs/icon-quote-white.svg"
-                                                    alt="quote"
-                                                    className="hidden dark:block"
-                                                />
+                                                <Quote className="size-12 fill-primary text-primary" aria-hidden />
                                             </div>
                                             <div className="flex flex-col gap-12">
-                                                <p className="sm:text-4xl text-xl text-muted-foreground">
+                                                <blockquote className="sm:text-3xl text-xl text-muted-foreground">
                                                     {t.quote}
-                                                </p>
+                                                </blockquote>
                                                 <div className="flex items-center justify-between">
                                                     <div>
                                                         <p className="text-base font-medium">{t.author}</p>
@@ -124,7 +116,7 @@ export default function Testimonials() {
                                             <div className="relative aspect-square rounded-xl overflow-hidden">
                                                 <Image
                                                     src={t.image}
-                                                    alt={t.author}
+                                                    alt={`Foto de ${t.author}`}
                                                     fill
                                                     sizes="(min-width: 768px) 33vw, 100vw"
                                                     className="object-cover"
