@@ -101,7 +101,7 @@ export function CompaniesStrip({ logos }: { logos: Logo[] }) {
         <Marquee
           pauseOnHover
           repeat={2}
-          className="w-full p-0 [--duration:40s] mask-[linear-gradient(to_right,transparent,black_5%,black_95%,transparent)] motion-reduce:[&_*]:[animation-play-state:paused]"
+          className="w-full p-0 [--duration:40s] mask-[linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]"
         >
           {logos.map((logo) => (
             <div key={logo.src} className="mx-8 flex items-center justify-center">
