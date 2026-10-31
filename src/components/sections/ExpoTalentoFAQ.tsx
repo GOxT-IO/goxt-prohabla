@@ -59,7 +59,7 @@ function getPreguntas(): Pregunta[] {
       pregunta: "¿Cuándo es la próxima feria de empleo?",
       respuesta: evento
         ? `La próxima es la ${evento.nombre}: ${evento.diaSemana.toLowerCase()} ${evento.fecha}, de ${evento.horario}, en ${evento.institucion} (${evento.sede}).`
-        : "Estamos preparando la próxima feria. Revisa la sección Eventos o registra tu CV para enterarte primero.",
+        : "Estamos preparando la próxima feria. Revisa la Agenda o registra tu CV para enterarte primero.",
     },
     {
       pregunta: "¿Qué llevo a una feria de empleo?",

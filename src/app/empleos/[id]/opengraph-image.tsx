@@ -58,6 +58,7 @@ export default async function OpengraphImage({ params }: OpengraphImageProps) {
         >
           <img
             src={logoSrc}
+            alt=""
             width={176}
             height={176}
             style={{ objectFit: "contain" }}

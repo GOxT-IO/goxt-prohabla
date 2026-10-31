@@ -1,7 +1,6 @@
 import { ImageResponse } from "next/og";
 import fs from "node:fs";
 import path from "node:path";
-import { proximoEvento } from "@/lib/eventos";
 
 export const runtime = "nodejs";
 export const alt = "Prohabla - Portal de empleo y ferias de empleo";
@@ -42,7 +41,7 @@ export default async function OpengraphImage() {
               boxShadow: "0 20px 60px rgba(0,0,0,0.35)",
             }}
           >
-            <img src={logoSrc} width={420} height={137} style={{ objectFit: "contain" }} />
+            <img src={logoSrc} alt="" width={420} height={137} style={{ objectFit: "contain" }} />
           </div>
           <div
             style={{
@@ -54,7 +53,7 @@ export default async function OpengraphImage() {
               maxWidth: 900,
             }}
           >
-            {`${proximoEvento.diaSemana} ${proximoEvento.fecha} · ${proximoEvento.sede} · ${proximoEvento.entrada}`}
+            Portal de empleo y ferias de empleo en Costa Rica
           </div>
         </div>
       </div>
