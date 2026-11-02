@@ -14,11 +14,10 @@ export const SOCIAL_LINKS = {
 
 /** Formularios del CRM. */
 export const FORMS = {
-  postulantes:
-    "https://crm.goxt.io/widget/form/formulario-de-confirmacin-de-asistencia-a-expotalento-2026",
-  // TODO: hoy empresas usa el mismo formulario que postulantes; confirmar si debe ser
-  // el formulario de vacantes del CRM (formulario-vacantes-disponibles).
-  empresas:
-    "https://crm.goxt.io/widget/form/formulario-de-confirmacin-de-asistencia-a-expotalento-2026",
+  // Formulario de postulación del CRM (el mismo que se abre al postular a una vacante).
+  // El de "confirmación de asistencia a ExpoTalento 2026" ya no existe en el CRM.
+  postulantes: "https://crm.goxt.io/widget/form/formulario-de-postulacion",
+  // Formulario de vacantes: sus respuestas son las que se publican en /empleos.
+  empresas: "https://crm.goxt.io/widget/form/formulario-vacantes-disponibles",
   contacto: "https://crm.goxt.io/widget/form/formulario-de-contactos",
 };
