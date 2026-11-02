@@ -101,7 +101,7 @@ export function CompaniesStrip({ logos }: { logos: Logo[] }) {
         <Marquee
           pauseOnHover
           repeat={2}
-          className="w-full p-0 [--duration:40s] mask-[linear-gradient(to_right,transparent,black_5%,black_95%,transparent)] motion-reduce:[&_*]:[animation-play-state:paused]"
+          className="w-full p-0 [--duration:40s] mask-[linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]"
         >
           {logos.map((logo) => (
             <div key={logo.src} className="mx-8 flex items-center justify-center">
@@ -206,7 +206,7 @@ export function EventBanner({ evento }: { evento: Evento | null }) {
             description={
               evento
                 ? "Lleva tu CV impreso, conversa con reclutadores y conoce a las empresas participantes. La entrada es libre."
-                : "Organizamos ferias de empleo presenciales en distintos puntos de Costa Rica. Revisa las ferias realizadas y entérate de las próximas."
+                : "Organizamos ferias de empleo presenciales en distintos puntos de Costa Rica. Revisa la agenda y entérate de las próximas ferias, talleres y charlas."
             }
           />
           {evento && (
@@ -237,12 +237,12 @@ export function EventBanner({ evento }: { evento: Evento | null }) {
           <div className="flex flex-wrap gap-3">
             {evento && (
               <Button asChild className="h-12 rounded-full px-6 text-base">
-                <Link href="/postulantes">Confirmar asistencia</Link>
+                <Link href={`/agenda#${evento.id}`}>Inscribirme</Link>
               </Button>
             )}
             <Button asChild variant="outline" className="h-12 rounded-full px-6 text-base">
-              <Link href="/eventos">
-                Ver todas las ferias <ArrowRight aria-hidden />
+              <Link href="/agenda">
+                Ver la agenda <ArrowRight aria-hidden />
               </Link>
             </Button>
           </div>

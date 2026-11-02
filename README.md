@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Prohabla
 
-## Getting Started
+Sitio de [www.prohabla.org](https://www.prohabla.org): portal de empleo y agenda de ferias de empleo de Prohabla en Costa Rica. Hecho con Next.js 16 (App Router), Tailwind CSS 4 y componentes shadcn/ui.
 
-First, run the development server:
+Las vacantes, el blog, los eventos realizados y los formularios vienen del CRM de GOxT.
+
+## Desarrollo
 
 ```bash
+npm install
+cp .env.example .env.local   # completar las claves
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Variables de entorno (`.env.example`):
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Variable | Para qué |
+| --- | --- |
+| `BLOG_API_KEY` | Posts del blog (`/blog`) desde el CRM |
+| `EVENTS_API_KEY` | Crónicas de eventos realizados (`/eventos`) desde el CRM |
+| `VACANTES_MOCK` | `1` usa vacantes de ejemplo en vez del CRM (solo desarrollo y CI) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Antes de abrir un PR: `npm run lint`, `npx tsc --noEmit` y `npm run build`. GitHub Actions corre lo mismo en cada PR.
 
-## Learn More
+## Tareas frecuentes
 
-To learn more about Next.js, take a look at the following resources:
+**Agregar una feria, taller o charla a la agenda.** Sumar un objeto a la lista `agenda` en `src/lib/eventos.ts`. Las fechas `inicio` y `fin` van en ISO con la zona de Costa Rica (`2026-11-19T09:00:00-06:00`). El evento aparece en `/agenda` y, si es una feria, en la home y el FAQ; cuando termina pasa solo a "Eventos realizados".
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Cambiar correo, redes o formularios.** Todo está en `src/lib/site-config.ts`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Agregar logos de empresas.** Guardar el PNG recortado en `public/empresas-trimmed/` con el nombre de la empresa (así se asocia a sus vacantes) y correr `node scripts/optimize-images.mjs` para bajarle el peso.
 
-## Deploy on Vercel
+## Estructura
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/app/`: páginas (`/`, `/empleos`, `/agenda`, `/eventos`, `/blog`, `/postulantes`, `/empresas`, `/contacto`, `/privacidad`), sitemap y robots.
+- `src/components/portal/`: piezas del portal (buscador, tarjetas de vacantes, agenda, formularios del CRM).
+- `src/components/empleos/`: bolsa de empleo con filtros.
+- `src/lib/`: datos y lógica (vacantes del CRM, filtros, agenda, configuración del sitio).

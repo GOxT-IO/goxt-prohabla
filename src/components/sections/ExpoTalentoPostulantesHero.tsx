@@ -1,3 +1,4 @@
+import { CrmFormEmbed } from "@/components/portal/crm-form-embed";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { FORMS } from "@/lib/site-config";
@@ -86,13 +87,7 @@ export default function ExpoTalentoPostulantesHero() {
 
           {/* Columna derecha: Formulario Iframe */}
           <div className="flex flex-col gap-8">
-            <iframe
-              src={FORMS.postulantes}
-              width="100%"
-              height="850"
-              style={{ border: "none", borderRadius: "16px" }}
-              title="Formulario de registro de postulantes"
-            />
+            <CrmFormEmbed src={FORMS.postulantes} title="Formulario de registro de postulantes" desktopHeight={850} />
           </div>
         </div>
       </div>

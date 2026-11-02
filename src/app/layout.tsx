@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/navbar";
+import { MotionProvider } from "@/components/layout/motion-provider";
 import Script from "next/script";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site-config";
 
@@ -45,12 +46,16 @@ export default function RootLayout({
     <html lang="es" className={`${inter.variable} h-full antialiased`}>
       {process.env.NODE_ENV === "development" && (
         <head>
+          {/* Vista previa de temas de tweakcn, solo en desarrollo. */}
+          {/* eslint-disable-next-line @next/next/no-sync-scripts */}
           <script src="https://tweakcn.com/live-preview.min.js" />
         </head>
       )}
       <body className="min-h-full flex flex-col" style={{ background: "#F7FBFE" }}>
-        <Navbar />
-        <div id="contenido" className="flex flex-1 flex-col">{children}</div>
+        <MotionProvider>
+          <Navbar />
+          <div id="contenido" className="flex flex-1 flex-col">{children}</div>
+        </MotionProvider>
         <Script
           src="https://api-crm.goxt.io/api/widget/embed.js"
           data-api-key="wk_f8c21837b9b4027d0e1f4e32d87eb2f670dc4ddd2550e7f1"

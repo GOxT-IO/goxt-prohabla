@@ -1,3 +1,4 @@
+import { CrmFormEmbed } from "@/components/portal/crm-form-embed";
 import { FORMS } from "@/lib/site-config";
 
 export default function ExpoTalentoContact() {
@@ -23,13 +24,7 @@ export default function ExpoTalentoContact() {
 
           {/* Columna derecha — formulario */}
           <div className="flex flex-1 flex-col gap-8">
-            <iframe
-              src={FORMS.contacto}
-              width="100%"
-              height="1000"
-              style={{ border: "none", borderRadius: "16px" }}
-              title="Formulario de contacto de Prohabla"
-            />
+            <CrmFormEmbed src={FORMS.contacto} title="Formulario de contacto de Prohabla" desktopHeight={1000} />
           </div>
         </div>
       </div>
