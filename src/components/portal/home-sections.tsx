@@ -101,7 +101,9 @@ export function CompaniesStrip({ logos }: { logos: Logo[] }) {
         <Marquee
           pauseOnHover
           repeat={2}
-          className="w-full p-0 [--duration:40s] mask-[linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]"
+          className="w-full p-0 mask-[linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]"
+          // La duración crece con la cantidad de logos para mantener una velocidad pareja (~50 px/s).
+          style={{ "--duration": `${Math.max(logos.length * 5, 30)}s` } as React.CSSProperties}
         >
           {logos.map((logo) => (
             <div key={logo.src} className="mx-8 flex items-center justify-center">
